@@ -1,19 +1,53 @@
-function App() {
-  let varprueba ="Titulo"
+import { useState } from "react";
 
-  const handleChangePrueba = (event) => {
-    varprueba = event.target.value
+
+function App() {
+  //todo: presentar el concepto de "state"
+  
+  //hooks
+ const [tituloState, setTituloState] = useState("");
+ const [fechaState, setFechaState] = useState("");
+ const [notaState, setNotaState] = useState("");
+
+  const handleChangeTitulo = (event) => {
+    setTituloState(event.target.value);
+  };
+  const handleChangeFecha = (event) => {
+    setFechaState(event.target.value);
+  };
+  const handleChangeNota = (event) => {
+    setNotaState(event.target.value);
   };
    return (
     <div className="App">
       <h3>Notas</h3>
-      <label htmlfor="pruebaID">Input de prueba</label>
+      <label htmlfor="titulo">Titulo</label>
       <input 
-      id="pruebaID" 
-      name="prueba" 
+      id="titulo" 
+      name="titulo" 
       type="text"
-      onChange={handleChangePrueba}
-      value={varprueba}
+      onChange={handleChangeTitulo}
+      value={tituloState}
+
+      />
+      <br/>
+      <label htmlfor="fecha">Fecha</label>
+      <input 
+      id="fecha" 
+      name="fecha" 
+      type="text"
+      onChange={handleChangeFecha}
+      value={fechaState}
+
+      />
+      <br/>
+      <label htmlfor="nota">Nota</label>
+      <input 
+      id="nota" 
+      name="nota" 
+      type="text"
+      onChange={handleChangeNota}
+      value={notaState}
 
       />
     </div>
