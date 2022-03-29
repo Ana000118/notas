@@ -5,19 +5,21 @@ function App() {
   //todo: presentar el concepto de "state"
   
   //hooks
- const [tituloState, setTituloState] = useState("");
- const [fechaState, setFechaState] = useState("");
- const [notaState, setNotaState] = useState("");
+ const [inputState, setInputState] = useState({
+   titulo:"",
+   fecha:"",
+   nota:"",
+ });//valor inicial del state
+ 
 
-  const handleChangeTitulo = (event) => {
-    setTituloState(event.target.value);
+  const handleInputChange = (event) => {
+    //console.log(event.target.);
+    setInputState({
+      ...inputState,
+      [event.target.name]: event.target.value,
+    });
   };
-  const handleChangeFecha = (event) => {
-    setFechaState(event.target.value);
-  };
-  const handleChangeNota = (event) => {
-    setNotaState(event.target.value);
-  };
+  
    return (
     <div className="App">
       <h3>Notas</h3>
@@ -26,8 +28,8 @@ function App() {
       id="titulo" 
       name="titulo" 
       type="text"
-      onChange={handleChangeTitulo}
-      value={tituloState}
+      onChange={handleInputChange}
+      value={inputState.titulo}
 
       />
       <br/>
@@ -36,8 +38,8 @@ function App() {
       id="fecha" 
       name="fecha" 
       type="text"
-      onChange={handleChangeFecha}
-      value={fechaState}
+      onChange={handleInputChange}
+      value={inputState.fecha}
 
       />
       <br/>
@@ -46,8 +48,8 @@ function App() {
       id="nota" 
       name="nota" 
       type="text"
-      onChange={handleChangeNota}
-      value={notaState}
+      onChange={handleInputChange}
+      value={inputState.nota}
 
       />
     </div>
