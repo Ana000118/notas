@@ -25,49 +25,60 @@ function App() {
     fecha: "", 
     nota: ""
   });
-  };
+  }
 
    return (
-    <div className="App">
-      <h3>Notas</h3>
-      <label htmlfor="titulo">Titulo</label>
-      <input 
-      id="titulo" 
-      name="titulo" 
-      type="text"
-      onChange={handleInputChange}
-      value={inputState.titulo}
-      />
-
-      <br/>
-      <label htmlfor="fecha">Fecha</label>
-      <input 
-      id="fecha" 
-      name="fecha" 
-      type="text"
-      onChange={handleInputChange}
-      value={inputState.fecha}
-      />
-
-      <br/>
-      <label htmlfor="nota">Nota</label>
-      <input 
-      id="nota" 
-      name="nota" 
-      type="text"
-      onChange={handleInputChange}
-      value={inputState.nota}
-      />
-
-       <button 
+    <div className="App container">
+      <div className="row">
+        <div className="col">
+          <h3>Lista</h3>
+        </div>
+        <div className="col">
+         <h3>Notas</h3><br></br>
+         <label className="mb-2">
+          Titulo
+         <input 
+           id="titulo" 
+           name="titulo" 
+           type="text"
+           onChange={handleInputChange}
+           value={inputState.titulo}
+           />
+           </label>
+           <br/>
+           <label className="mb-2">
+            Fecha 
+            <input 
+            id="fecha" 
+            name="fecha" 
+            type="text"
+            onChange={handleInputChange}
+            value={inputState.fecha}
+            />
+            </label>
+            <br/>
+            <label className="bm-2">
+             Nota 
+             <input 
+             id="nota" 
+             name="nota" 
+             type="text"
+             onChange={handleInputChange}
+             value={inputState.nota}
+             />
+            </label>
+          </div>
+        </div>
+        <hr/>
+        <div className="bm-2">
+         <button 
           type="button" 
-          className="btn btn-primary mx-2" 
-          onClick={handleResetChange}
-          style={{marginLeft:"15px"}}
-        >Reset
-        </button>
-     
-    </div>
+          className="btn btn-primary" 
+          onClick={handleResetChange}>
+          Reset
+          </button>
+        </div>
+      </div>
   );
 }
 
