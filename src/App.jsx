@@ -18,17 +18,19 @@ function App() {
       [event.target.name]: event.target.value,
     });
   };
-  const handleResetBorrar= () => {
+  const handleInputBorrar= () => {
     setInputState({
       ...inputState,
     titulo: "", 
     fecha: "", 
-    nota: ""
-  });
+    nota: "" });
 
 };
-const handleResetGuardar= () => {
-  localStorage.setItem("notas", JSON.stringify(inputState));
+const handleInputGuardar = () => {
+  let arregloNotas = JSON.parse(localStorage.getItem ("notas")) || [];
+  arregloNotas.push(inputState);
+  localStorage.setItem("notas", JSON.stringify(arregloNotas));
+  handleInputBorrar();
   };
 
    return (
@@ -51,7 +53,7 @@ const handleResetGuardar= () => {
            />
            </label>
            <br/>
-           <label className="mb-2">
+           <label className="mb-2" style={{width: "100%"}}>
             Fecha 
             <input 
             id="fecha" 
@@ -63,7 +65,7 @@ const handleResetGuardar= () => {
             />
             </label>
             <br/>
-            <label className="bm-2">
+            <label className="bm-2" style={{width: "100%"}}>
              Nota 
              <input 
              id="nota" 
@@ -82,7 +84,7 @@ const handleResetGuardar= () => {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={handleResetBorrar}
+            onClick={handleInputBorrar}
           >
             Borrar
           </button>
@@ -95,7 +97,7 @@ const handleResetGuardar= () => {
           <button 
             type="button"
             className="btn btn-primary"
-            onClick={handleResetGuardar}>
+            onClick={handleInputGuardar}>
             Guardar
           </button>
           </span>
