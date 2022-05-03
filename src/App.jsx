@@ -26,11 +26,24 @@ function App() {
     nota: "" });
 
 };
+let arregloNotas = JSON.parse(localStorage.getItem ("notas")) || [];
+ 
 const handleInputGuardar = () => {
-  let arregloNotas = JSON.parse(localStorage.getItem ("notas")) || [];
   arregloNotas.push(inputState);
   localStorage.setItem("notas", JSON.stringify(arregloNotas));
   handleInputBorrar();
+  };
+  
+  const handleBorrarNota = (index) => {
+    const nuevoArreglo = [];
+    console.log(index);
+    arregloNotas.forEach((nota,i) => {
+      if (i !== index){
+        nuevoArreglo.push(nota);
+      }
+    });
+    localStorage.setItem("notas", JSON.stringify(nuevoArreglo));
+    arregloNotas =  [...nuevoArreglo];
   };
 
    return (
@@ -38,6 +51,29 @@ const handleInputGuardar = () => {
       <div className="row">
         <div className="col">
           <h3>Lista</h3>
+          {
+            arregloNotas.length===0 &&
+            "Al momento no tienes notas guardadas. Puedes crear una en el formulario"
+          }
+          {
+            arregloNotas.length !== 0 && (
+              <ol>
+                {arregloNotas.map((item, index)=>{
+                  return(
+                    <li>
+                      {item.titulo} ({item.fecha}) {item.nota}
+                      <i className="bi-x-circle-fill" 
+                      onClick={() => handleBorrarNota (index)}
+                      style={{
+                      color:"red", 
+                      fontSize:"0.75rem", 
+                      cursor:"pointer",}}></i>
+                    </li>
+                  )
+                })}
+              </ol>
+            )
+          }
         </div>
         <div className="col">
          <h3>Notas</h3><br></br>
