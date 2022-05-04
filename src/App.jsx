@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-
 function App() {
   //todo: presentar el concepto de "state"
   
@@ -10,6 +9,9 @@ function App() {
    fecha:"",
    nota:"",
  });//valor inicial del state
+
+ const inicialState = JSON.parse(localStorage.getItem ("notas")) || [];
+ const [notas, setNotas] = useState(inicialState);
  
   const handleInputChange = (event) => {
     //console.log(event.target.);
@@ -18,7 +20,7 @@ function App() {
       [event.target.name]: event.target.value,
     });
   };
-  const handleInputBorrar= () => {
+  const handleClickBorrar= () => {
     setInputState({
       ...inputState,
     titulo: "", 
@@ -26,24 +28,24 @@ function App() {
     nota: "" });
 
 };
-let arregloNotas = JSON.parse(localStorage.getItem ("notas")) || [];
  
-const handleInputGuardar = () => {
-  arregloNotas.push(inputState);
-  localStorage.setItem("notas", JSON.stringify(arregloNotas));
-  handleInputBorrar();
+const handleClickGuardar = () => {
+  setNotas([...notas, inputState]);
+  localStorage.setItem("notas", JSON.stringify(notas));
+  handleClickBorrar();
   };
   
   const handleBorrarNota = (index) => {
     const nuevoArreglo = [];
-    console.log(index);
-    arregloNotas.forEach((nota,i) => {
-      if (i !== index){
+
+    notas.forEach((nota,i) => {
+      if (index !== i) {
         nuevoArreglo.push(nota);
       }
     });
+
     localStorage.setItem("notas", JSON.stringify(nuevoArreglo));
-    arregloNotas =  [...nuevoArreglo];
+    setNotas([...nuevoArreglo]);
   };
 
    return (
@@ -51,17 +53,15 @@ const handleInputGuardar = () => {
       <div className="row">
         <div className="col">
           <h3>Lista</h3>
-          {
-            arregloNotas.length===0 &&
+          {notas.length === 0 ? (
             "Al momento no tienes notas guardadas. Puedes crear una en el formulario"
-          }
-          {
-            arregloNotas.length !== 0 && (
+            ) : (
               <ol>
-                {arregloNotas.map((item, index)=>{
+                {notas.map((item, index) => {
                   return(
-                    <li>
-                      {item.titulo} ({item.fecha}) {item.nota}
+                    <li key ={index}>
+                      {item.titulo} ({item.fecha}) {item.nota}&nbsp;
+
                       <i className="bi-x-circle-fill" 
                       onClick={() => handleBorrarNota (index)}
                       style={{
@@ -73,7 +73,7 @@ const handleInputGuardar = () => {
                 })}
               </ol>
             )
-          }
+           }
         </div>
         <div className="col">
          <h3>Notas</h3><br></br>
@@ -82,7 +82,7 @@ const handleInputGuardar = () => {
          <input 
            id="titulo" 
            name="titulo" 
-           type="text"
+           type="text "
            onChange={handleInputChange}
            value={inputState.titulo}
            style={{width: "100%"}}
@@ -94,7 +94,7 @@ const handleInputGuardar = () => {
             <input 
             id="fecha" 
             name="fecha" 
-            type="text"
+            type="date"
             onChange={handleInputChange}
             value={inputState.fecha}
             style={{width: "100%"}}
@@ -103,10 +103,9 @@ const handleInputGuardar = () => {
             <br/>
             <label className="bm-2" style={{width: "100%"}}>
              Nota 
-             <input 
+             <textarea 
              id="nota" 
              name="nota" 
-             type="text"
              onChange={handleInputChange}
              value={inputState.nota}
              style={{width: "100%"}}
@@ -120,7 +119,7 @@ const handleInputGuardar = () => {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={handleInputBorrar}
+            onClick={handleClickBorrar}
           >
             Borrar
           </button>
@@ -133,7 +132,7 @@ const handleInputGuardar = () => {
           <button 
             type="button"
             className="btn btn-primary"
-            onClick={handleInputGuardar}>
+            onClick={handleClickGuardar}>
             Guardar
           </button>
           </span>
