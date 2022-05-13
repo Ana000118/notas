@@ -20,6 +20,7 @@ function App() {
       [event.target.name]: event.target.value,
     });
   };
+  
   const handleClickBorrar= () => {
     setInputState({
       ...inputState,
@@ -47,9 +48,14 @@ const handleClickGuardar = () => {
     localStorage.setItem("notas", JSON.stringify(nuevoArreglo));
     setNotas([...nuevoArreglo]);
   };
+
   const handleClickLimpiarLista = () => {
     setNotas([])
     localStorage.setItem("notas", JSON.stringify([]));
+  };
+
+  const handleClickNota = (index) => {
+    setInputState({...notas[index]});
   };
 
    return (
@@ -63,17 +69,18 @@ const handleClickGuardar = () => {
               <ol>
                 {notas.map((item, index) => {
                   return(
-                    <li key ={index}>
-                      {item.titulo} ({item.fecha}) {item.nota}&nbsp;
+                    <li key ={index} onClick={()=>handleClickNota (index)}>
+                      {item.titulo} ({item.fecha})&nbsp;
 
                       <i className="bi-x-circle-fill" 
                       onClick={() => handleBorrarNota (index)}
                       style={{
                       color:"red", 
                       fontSize:"0.75rem", 
-                      cursor:"pointer",}}></i>
+                      cursor:"pointer",}}>
+                      </i>
                     </li>
-                  )
+                  );
                 })}
               </ol>
             )}
